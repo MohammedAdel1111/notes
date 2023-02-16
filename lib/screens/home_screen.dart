@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:note_app/style/app_style.dart';
+import 'package:google_fonts/google_fonts.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({
@@ -21,7 +22,17 @@ class _HomeScreenState extends State<HomeScreen> {
         centerTitle: true,
         backgroundColor: AppStyle.mainColor,
       ),
-      body: Column(),
+      body: Column(
+        mainAxisAlignment: MainAxisAlignment.start,
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Text(
+            'Your recent Notes',
+            style: GoogleFonts.roboto(
+                color: Colors.white, fontWeight: FontWeight.bold, fontSize: 22),
+          ),
+        ],
+      ),
     );
   }
 }
