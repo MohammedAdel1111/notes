@@ -41,31 +41,39 @@ class _HomeScreenState extends State<HomeScreen> {
                   fontSize: 22),
             ),
             SizedBox(height: 20.0),
-            StreamBuilder<QuerySnapshot>(
-              stream:
-                  FirebaseFirestore.instance.collection('Notes').snapshots(),
-              builder: (context, AsyncSnapshot snapShot) {
-                if (snapShot.connectionState == ConnectionState.waiting) {
-                  return Center(
-                    child: CircularProgressIndicator(),
+            Expanded(
+              child: StreamBuilder<QuerySnapshot>(
+                stream:
+                    FirebaseFirestore.instance.collection('Notes').snapshots(),
+                builder: (context, AsyncSnapshot<QuerySnapshot> snapShot) {
+                  if (snapShot.connectionState == ConnectionState.waiting) {
+                    return Center(
+                      child: CircularProgressIndicator(),
+                    );
+                  }
+                  if (snapShot.hasData) {
+                    return GridView(
+                      gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                          crossAxisCount: 2),
+                      children: snapShot.data!.docs
+                          .map((note) => noteCard(() {}, note))
+                          .toList(),
+                    );
+                  }
+                  return Text(
+                    "There's No Notes",
+                    style: GoogleFonts.nunito(color: Colors.white),
                   );
-                }
-                if (snapShot.hasData) {
-                  return GridView(
-                    gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                        crossAxisCount: 2),
-                    children: snapShot.data!.docs
-                        .map((note) => noteCard(() {}, note)),
-                  );
-                }
-                return Text(
-                  "There's No Notes",
-                  style: GoogleFonts.nunito(color: Colors.white),
-                );
-              },
+                },
+              ),
             )
           ],
         ),
+      ),
+      floatingActionButton: FloatingActionButton.extended(
+        onPressed: () {},
+        label: Text('Add Note'),
+        icon: Icon(Icons.add),
       ),
     );
   }
