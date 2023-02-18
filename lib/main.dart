@@ -16,9 +16,7 @@ class NotesApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
-      home: Scaffold(
-        backgroundColor: Colors.red,
-      ),
+      home: HomeScreen(),
     );
   }
 }
