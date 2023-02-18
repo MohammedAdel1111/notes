@@ -1,5 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:note_app/screens/note_reader.dart';
 import 'package:note_app/style/app_style.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:note_app/widgets/note_card.dart';
@@ -56,7 +57,12 @@ class _HomeScreenState extends State<HomeScreen> {
                       gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
                           crossAxisCount: 2),
                       children: snapShot.data!.docs
-                          .map((note) => noteCard(() {}, note))
+                          .map((note) => noteCard(() {
+                                Navigator.push(context,
+                                    MaterialPageRoute(builder: (context) {
+                                  return NoteReaderScreen(note);
+                                }));
+                              }, note))
                           .toList(),
                     );
                   }
